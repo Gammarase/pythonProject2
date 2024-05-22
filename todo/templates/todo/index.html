@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+
+<meta charset="utf-8">
+<title>{{title}}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!--style-->
+<style>
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5),
+                0 6px 20px 0 rgba(0,0,0,0.39);
+    background: #282828;
+    margin-bottom: 5%;
+    border-radius: 25px;
+    padding: 2%;
+    overflow: auto;
+    resize: both;
+    text-overflow: ellipsis;
+}
+
+.card:hover {
+    background: #383838;
+}
+
+.submit_form {
+    text-align: center;
+    padding: 3%;
+    background: #282828;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4),
+                0 6px 20px 0 rgba(0,0,0,0.36);
+}
+
+.alert {
+    background-color: #333;
+    color: #e0e0e0;
+    border: none;
+}
+
+.btn-primary {
+    background-color: #6200ea;
+    border-color: #6200ea;
+}
+
+.btn-primary:hover {
+    background-color: #3700b3;
+    border-color: #3700b3;
+}
+
+.btn-default {
+    background-color: #bbb;
+    color: #121212;
+    border-color: #bbb;
+}
+
+.btn-default:hover {
+    background-color: #888;
+    color: #121212;
+    border-color: #888;
+}
+
+hr {
+    border-top: 1px solid #444;
+}
+
+input, textarea, select {
+    background-color: #333;
+    color: #e0e0e0;
+    border: 1px solid #555;
+}
+
+input::placeholder, textarea::placeholder {
+    color: #888;
+}
+
+input:focus, textarea:focus, select:focus {
+    background-color: #444;
+    color: #fff;
+    border: 1px solid #777;
+}
+</style>
+
+</head>
+
+<body class="container-fluid">
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info">
+    <strong>{{message}}</strong>
+</div>
+{% endfor %}
+{% endif %}
+
+<center class="row">
+    <h1><i>TODO LIST By Bohdan Kryvytskyi</i></h1>
+    <hr />
+</center>
+
+<div class="row">
+
+    <div class="col-md-8">
+
+    {% for i in list %}
+    <div class="card">
+        <center><b>{{i.title}}</b></center>
+        <hr/>
+        {{i.date}}
+        <hr/>
+        {{i.details}}
+        <br />
+        <br />
+        <form action="/del/{{i.id}}" method="POST" style="padding-right: 4%; padding-bottom: 3%;">
+        {% csrf_token %}
+        <button value="remove" type="submit" class="btn btn-primary" style="float: right;"><span class="glyphicon glyphicon-trash"></span>  remove</button>
+        </form>
+    </div>
+    {% endfor %}
+    </div>
+    <div class="col-md-1"> </div>
+    <div class="col-md-3" >
+    <div class="submit_form">
+    <form method="POST">
+        {% csrf_token %}
+        {{forms}}
+        <center>
+        <input type="submit" class="btn btn-default" value="submit" />
+        </center>
+    </form>
+    </div>
+</div>
+</div>
+</body>
+
+</html>
